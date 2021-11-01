@@ -1,0 +1,16 @@
+.header-button {
+    padding: 0;
+    margin: 0 16px 0 7px;
+    cursor: pointer;
+    display: block;
+    outline: none;
+    background-color: transparent;
+    border: none;
+
+    &:hover {
+        path,
+        rect {
+            stroke: #a9a9a9;
+        }
+    }
+}
