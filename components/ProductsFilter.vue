@@ -85,6 +85,7 @@
       </ul>
 
       <h3 class="filters-title">Rating</h3>
+      
     </form>
   </div>
 </template>
@@ -257,9 +258,9 @@ export default {
       content: "";
       background: #6f64f8;
       position: absolute;
-      width: 5px;
+      width: 6px;
       height: 2px;
-      top: 18px;
+      top: 19px;
       left: 3px;
       transform: rotate(60deg);
       border-radius: 2px;

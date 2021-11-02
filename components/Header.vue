@@ -34,7 +34,7 @@ export default {
 </script>
 <style lang="scss">
 .header {
-  max-width: 1650px;
+  max-width: 1710px;
   margin: 0 auto;
   padding: 30px 30px 0;
 

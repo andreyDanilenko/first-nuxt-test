@@ -10,7 +10,7 @@
 </template>
 <style lang="scss" scoped>
 .container {
-  max-width: 1650px;
+  max-width: 1710px;
   margin: 0 auto;
   padding: 0 30px;
 }
