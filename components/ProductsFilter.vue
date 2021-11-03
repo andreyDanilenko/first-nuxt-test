@@ -12,15 +12,13 @@
           <input
             class="filters__price-input"
             type="radio"
-            v-bind:id="item.value"
+            :id="item.value"
             name="price"
             v-bind:value="item.value"
           />
-          <label
-            class="filters-label filters__price-label"
-            v-bind:for="item.value"
-            >{{ item.title }}</label
-          >
+          <label class="filters-label filters__price-label" :for="item.value">{{
+            item.title
+          }}</label>
         </li>
         <li class="filters__price-item">
           <input
@@ -50,13 +48,13 @@
           <input
             class="filters__category-input"
             type="checkbox"
-            v-bind:id="item.name"
+            :id="item.name"
             name="category"
-            v-bind:value="item.id"
+            :value="item.id"
           />
           <label
             class="filters-label filters__category-label"
-            v-bind:for="item.name"
+            :for="item.name"
             >{{ item.name }}</label
           >
         </li>
@@ -72,20 +70,17 @@
           <input
             class="filters__category-input"
             type="checkbox"
-            v-bind:id="item.id"
+            :id="item.id"
             name="brands"
-            v-bind:value="item.id"
+            :value="item.id"
           />
-          <label
-            class="filters-label filters__category-label"
-            v-bind:for="item.id"
-            >{{ item.title }}</label
-          >
+          <label class="filters-label filters__category-label" :for="item.id">{{
+            item.title
+          }}</label>
         </li>
       </ul>
 
       <h3 class="filters-title">Rating</h3>
-      
     </form>
   </div>
 </template>

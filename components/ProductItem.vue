@@ -36,7 +36,10 @@
       </div>
     </div>
     <div class="product__button-wrapper">
-      <button class="product__button product__button--addtowishlist">
+      <button
+        @click="addToWishlist"
+        class="product__button product__button--addtowishlist"
+      >
         <svg
           width="17"
           height="15"
@@ -56,7 +59,10 @@
         </svg>
         <span>Wishlist</span>
       </button>
-      <button class="product__button product__button--addtocart">
+      <button
+        @click="addToCart"
+        class="product__button product__button--addtocart"
+      >
         <svg
           width="20"
           height="20"
@@ -97,14 +103,41 @@
   </li>
 </template>
 <script>
-export default {};
+export default {
+  props: {
+    product: {
+      type: Object,
+      required: false,
+    },
+  },
+
+  computed: {},
+
+  methods: {
+    addToCart(evt) {
+      this.$emit("addToCart", evt.target);
+    },
+    addToWishlist(evt) {
+      this.$emit("addToWishlist", evt.target);
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .product {
-  width: calc((100% / 3) - 16px);
+  width: 100%;
+  margin-top: 30px;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.1352);
+
+  @media (min-width: 467px) {
+    width: calc((100% / 2) - 16px);
+  }
+
+  @media (min-width: 767px) {
+    width: calc((100% / 3) - 16px);
+  }
 
   &__poster-wrapper {
     display: flex;
@@ -167,12 +200,14 @@ export default {};
   }
 
   &__button-wrapper {
-    display: flex;
+    @media (min-width: 1240px) {
+      display: flex;
+    }
   }
 
   &__button {
     cursor: pointer;
-    width: 50%;
+    width: 100%;
     padding: 14px 5px;
     font-weight: 600;
     font-size: 14px;
@@ -184,7 +219,10 @@ export default {};
     &--addtowishlist {
       color: #000;
       background: #ededed;
-      border-radius: 0 0 0 8px;
+
+      @media (min-width: 1240px) {
+        border-radius: 0 0 0 8px;
+      }
 
       svg {
         margin-bottom: -2px;
@@ -196,7 +234,11 @@ export default {};
       position: relative;
       color: #fff;
       background: #6f64f8;
-      border-radius: 0 0 8px 0;
+      border-radius: 0 0 8px 8px;
+
+      @media (min-width: 1240px) {
+        border-radius: 0 0 8px 0;
+      }
 
       svg {
         position: absolute;

@@ -6,6 +6,12 @@
     </div>
     <div class="products__list-wrapper">
       <ul class="products__list">
+        <product-item @addToWishlist="addToWishlist" @addToCart="addToCart" />
+        <product-item />
+        <product-item />
+        <product-item />
+        <product-item />
+        <product-item />
         <product-item />
         <product-item />
         <product-item />
@@ -15,24 +21,44 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    addToWishlist(evt) {
+      console.log(evt);
+    },
+
+    addToCart(evt) {
+      console.log(evt);
+    },
+  },
+};
 </script>
 <style lang="scss">
 .products {
-  display: flex;
-  justify-content: space-between;
+  @media (min-width: 1240px) {
+    display: flex;
+    justify-content: space-between;
+  }
 
   &__filters {
-    width: calc(100% / 4 - 15px);
+    width: 100%;
+
+    @media (min-width: 1240px) {
+      width: calc(100% / 4 - 15px);
+    }
   }
 
   &__list-wrapper {
-    width: calc(100% / 4 * 3 - 15px);
+    width: 100%;
+
+    @media (min-width: 1240px) {
+      width: calc(100% / 4 * 3 - 15px);
+    }
   }
 
   &__list {
-    margin-top: 26px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
   }
 }
