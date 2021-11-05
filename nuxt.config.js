@@ -37,6 +37,13 @@ export default {
     '@nuxtjs/axios',
   ],
 
+  vue: {
+    config: {
+      productionTip: true,
+      devtools: true
+    }
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 

@@ -1,12 +1,12 @@
 <template>
   <li class="product">
     <div class="product__poster-wrapper">
-      <img class="product__poster" src="../assets/img/apple-watch.png" alt="" />
+      <img class="product__poster" :src="product.image" alt="" />
     </div>
     <div class="product__info">
       <div class="product__numbers">
         <div class="product__numbers-rating">
-          <div>3.4</div>
+          <div>{{ product.rating }}</div>
           <div>
             <svg
               width="12"
@@ -26,12 +26,12 @@
             </svg>
           </div>
         </div>
-        <div class="product__numbers-price">$399</div>
+        <div class="product__numbers-price">${{ product.price }}</div>
       </div>
       <div class="product__text">
-        <h3 class="product__title">JBL Speaker</h3>
+        <h3 class="product__title">{{ product.title }}</h3>
         <p class="product__description">
-          Redesigned from scratch and completely revised.
+          {{ product.desc }}
         </p>
       </div>
     </div>
@@ -109,16 +109,17 @@ export default {
       type: Object,
       required: false,
     },
+    
   },
 
   computed: {},
 
   methods: {
-    addToCart(evt) {
-      this.$emit("addToCart", evt.target);
+    addToCart() {
+      this.$emit("addToCart", this.product.id);
     },
-    addToWishlist(evt) {
-      this.$emit("addToWishlist", evt.target);
+    addToWishlist() {
+      this.$emit("addToWishlist", this.product.id);
     },
   },
 };
@@ -126,24 +127,27 @@ export default {
 <style lang="scss" scoped>
 .product {
   width: 100%;
-  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  margin: 30px 15px 0;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.1352);
 
   @media (min-width: 467px) {
-    width: calc((100% / 2) - 16px);
+    width: calc((100% / 2) - 30px);
   }
 
   @media (min-width: 767px) {
-    width: calc((100% / 3) - 16px);
+    width: calc((100% / 3) - 30px);
   }
 
   &__poster-wrapper {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    padding: 30px 10px 0;
+    align-items: center;
+    flex-grow: 1;
+    padding: 30px 10px 10px;
   }
 
   &__poster {

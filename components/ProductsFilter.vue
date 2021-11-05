@@ -1,7 +1,7 @@
 <template>
   <div class="filters">
     <h2 class="filters__title">Фильтры</h2>
-    <form class="filter-form" action="">
+    <form class="filter-form">
       <h3 class="filters-title">Multi Range</h3>
       <ul class="filters__price-list">
         <li
@@ -39,7 +39,7 @@
       <div class="filters__price-slider"></div>
 
       <h3 class="filters-title">Category</h3>
-      <ul class="filters__category-list">
+      <ul @click="filterCategories" class="filters__category-list">
         <li
           v-for="item in FILTERS_CATEGORY"
           :key="item.id"
@@ -82,6 +82,9 @@
 
       <h3 class="filters-title">Rating</h3>
     </form>
+    <div class="filters__button-wrapper">
+      <button class="filters__button">CLEAR ALL FILTERS</button>
+    </div>
   </div>
 </template>
 <script>
@@ -119,20 +122,48 @@ export default {
         { name: "Small Kitchen Appliances", id: "10" },
       ],
       filterSelectedBrand: [],
+      brands: [],
+      categories: [],
+      rating: [],
+      price: [],
     };
   },
 
   methods: {
+    searchParamsHundler() {
+      return (params = {
+        brands: this.brands,
+        categories: this.categories,
+        rating: this.rating,
+        price: this.price,
+      });
+    },
+
     filterBrands(evt) {
       if (evt.target.tagName === "INPUT") {
         if (evt.target.checked) {
-          this.filterSelectedBrand.push(evt.target.value);
+          this.brands.push(evt.target.value);
         }
 
         if (!evt.target.checked) {
-          const index = this.filterSelectedBrand.indexOf(evt.target.value);
+          const index = this.brands.indexOf(evt.target.value);
           if (index > -1) {
-            this.filterSelectedBrand.splice(index, 1);
+            this.brands.splice(index, 1);
+          }
+        }
+      }
+    },
+
+    filterCategories(evt) {
+      if (evt.target.tagName === "INPUT") {
+        if (evt.target.checked) {
+          this.categories.push(evt.target.value);
+        }
+
+        if (!evt.target.checked) {
+          const index = this.categories.indexOf(evt.target.value);
+          if (index > -1) {
+            this.categories.splice(index, 1);
           }
         }
       }
@@ -260,6 +291,22 @@ export default {
       transform: rotate(60deg);
       border-radius: 2px;
     }
+  }
+
+  &__button {
+    margin-top: 30px;
+    width: 100%;
+    outline: none;
+    border: none;
+    color: #fff;
+    background: #6f64f8;
+    text-transform: uppercase;
+    border-radius: 8px;
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: 400;
+    padding: 18px;
+    box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.1352);
   }
 }
 </style>

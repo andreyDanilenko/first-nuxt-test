@@ -2,27 +2,44 @@
   <div class="products">
     <div class="products__filters">
       <products-filter />
-      <button>Поиск</button>
     </div>
     <div class="products__list-wrapper">
       <ul class="products__list">
-        <product-item @addToWishlist="addToWishlist" @addToCart="addToCart" />
-        <product-item />
-        <product-item />
-        <product-item />
-        <product-item />
-        <product-item />
-        <product-item />
-        <product-item />
-        <product-item />
+        <product-item
+          v-for="product in sortedAndSearchedProducts"
+          :key="product.id"
+          :product="product"
+          @addToWishlist="addToWishlist"
+          @addToCart="addToCart"
+        />
       </ul>
+      <div class="products__pagination"></div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
+  data() {
+    return {
+      fromCount: 0,
+      beforeCount: 9,
+    };
+  },
+
+  computed: {
+    ...mapGetters({
+      sortedProducts: "products/sortedProducts",
+      sortedAndSearchedProducts: "products/sortedAndSearchedProducts",
+    }),
+  },
+
   methods: {
+    ...mapActions({
+      fetchProducts: "products/fetchProducts",
+    }),
+
     addToWishlist(evt) {
       console.log(evt);
     },
@@ -30,6 +47,10 @@ export default {
     addToCart(evt) {
       console.log(evt);
     },
+  },
+
+  mounted() {
+    this.fetchProducts();
   },
 };
 </script>
@@ -59,7 +80,8 @@ export default {
   &__list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+    margin: 0 -15px;
   }
 }
 </style>
