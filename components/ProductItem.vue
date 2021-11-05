@@ -216,7 +216,6 @@ export default {
     font-size: 14px;
     line-height: 18px;
     text-transform: uppercase;
-    outline: none;
     border: none;
 
     &--addtowishlist {

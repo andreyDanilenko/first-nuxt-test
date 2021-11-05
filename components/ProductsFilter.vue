@@ -297,7 +297,6 @@ export default {
     cursor: pointer;
     margin-top: 30px;
     width: 100%;
-    outline: none;
     border: none;
     color: #fff;
     background: #6f64f8;

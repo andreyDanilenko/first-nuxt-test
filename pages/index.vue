@@ -4,7 +4,10 @@
       <products-filter />
     </div>
     <div class="products__list-wrapper">
-      <div class="products__sort"></div>
+      <div class="products__list-view">
+        <p class="products__list-view-result">7,618 results found in 5ms</p>
+        <products-sort :options="options" :selected="selected" />
+      </div>
       <div class="products__search">
         <div class="products__search-wrapper">
           <input
@@ -44,7 +47,10 @@
       </div>
       <ul v-if="!isProductsLoading" class="products__list">
         <product-item
-          v-for="product in sortedAndSearchedProducts"
+          v-for="product in sortedAndSearchedProducts.slice(
+            fromCount,
+            beforeCount
+          )"
           :key="product.id"
           :product="product"
           @addToWishlist="addToWishlist"
@@ -66,6 +72,12 @@ export default {
       fromCount: 0,
       beforeCount: 9,
       searchValue: "",
+      options: [
+        { name: "Default", value: "default" },
+        { name: "Price", value: "price" },
+        { name: "Rating", value: "rating" },
+      ],
+      selected: "Default",
     };
   },
 
@@ -135,6 +147,18 @@ export default {
     }
   }
 
+  &__list-view {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    &-result {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 21px;
+    }
+  }
+
   &__list-wrapper {
     width: 100%;
 
@@ -155,7 +179,7 @@ export default {
   }
 
   &__search-wrapper {
-    margin-top: 61px;
+    margin-top: 22px;
     position: relative;
 
     input {
