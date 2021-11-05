@@ -1,11 +1,16 @@
 export const state = () => ({
     products: [],
+    isProductsLoading: true,
     searchQuery: '',
 })
 
 export const mutations = {
     setProducts(state, products) {
         state.products = products
+    },
+
+    setLoading(state, bool) {
+        state.isProductsLoading = bool
     },
 
     setSearchQuery(state, searchQuery) {
@@ -20,9 +25,9 @@ export const actions = {
             });
             commit("setProducts", products);
         } catch (e) {
-            console.log(e)
+            alert(e.message)
         } finally {
-
+            commit('setLoading', false);
         }
     }
 }

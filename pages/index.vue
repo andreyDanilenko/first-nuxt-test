@@ -42,7 +42,7 @@
           </button>
         </div>
       </div>
-      <ul class="products__list">
+      <ul v-if="!isProductsLoading" class="products__list">
         <product-item
           v-for="product in sortedAndSearchedProducts"
           :key="product.id"
@@ -51,6 +51,8 @@
           @addToCart="addToCart"
         />
       </ul>
+      <div class="products__loading" v-else>Идет загрузка...</div>
+
       <div class="products__pagination"></div>
     </div>
   </div>
@@ -75,6 +77,7 @@ export default {
 
     ...mapState({
       searchQuery: (state) => state.products.searchQuery,
+      isProductsLoading: (state) => state.products.isProductsLoading,
     }),
   },
 
@@ -85,18 +88,22 @@ export default {
 
     ...mapActions({
       fetchProducts: "products/fetchProducts",
+      addCart: "cart/addToCart",
+      addWishlist: "wishlist/addToWishlist",
     }),
 
     searchProducts() {
       this.setSearchQuery(this.searchValue);
     },
 
-    addToWishlist(evt) {
-      console.log(evt);
+    addToWishlist(data) {
+      this.addWishlist(data);
+      console.log(data);
     },
 
-    addToCart(evt) {
-      console.log(evt);
+    addToCart(data) {
+      this.addCart(data);
+      console.log(data);
     },
   },
 
@@ -110,6 +117,14 @@ export default {
   @media (min-width: 1240px) {
     display: flex;
     justify-content: space-between;
+  }
+
+  &__loading {
+    margin-top: 30px;
+    text-align: center;
+    font-weight: 300;
+    font-size: 42px;
+    line-height: 46px;
   }
 
   &__filters {

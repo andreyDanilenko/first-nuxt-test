@@ -115,10 +115,10 @@ export default {
 
   methods: {
     addToCart() {
-      this.$emit("addToCart", this.product.id);
+      this.$emit("addToCart", this.product);
     },
     addToWishlist() {
-      this.$emit("addToWishlist", this.product.id);
+      this.$emit("addToWishlist", this.product);
     },
   },
 };
