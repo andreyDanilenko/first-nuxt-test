@@ -294,6 +294,7 @@ export default {
   }
 
   &__button {
+    cursor: pointer;
     margin-top: 30px;
     width: 100%;
     outline: none;
