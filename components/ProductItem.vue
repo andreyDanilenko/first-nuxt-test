@@ -109,7 +109,6 @@ export default {
       type: Object,
       required: false,
     },
-    
   },
 
   computed: {},
@@ -129,7 +128,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin: 30px 15px 0;
+  margin: 26px 15px 0;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.1352);

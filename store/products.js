@@ -1,11 +1,16 @@
 export const state = () => ({
-    products: []
+    products: [],
+    searchQuery: '',
 })
 
 export const mutations = {
     setProducts(state, products) {
         state.products = products
-    }
+    },
+
+    setSearchQuery(state, searchQuery) {
+        state.searchQuery = searchQuery
+    },
 }
 
 export const actions = {
@@ -28,6 +33,6 @@ export const getters = {
 
     },
     sortedAndSearchedProducts(state, getters) {
-        return getters.sortedProducts
+        return getters.sortedProducts.filter(product => product.title.toLowerCase().includes(state.searchQuery.toLowerCase()))
     }
 }
