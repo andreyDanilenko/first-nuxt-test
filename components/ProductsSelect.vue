@@ -34,6 +34,13 @@ export default {
       areOptionsVisable: false,
     };
   },
+
+  methods: {
+    selectOption(option) {
+      this.areOptionsVisable = false;
+      this.$emit("select", option);
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -44,6 +51,7 @@ export default {
 .title {
   cursor: pointer;
   display: inline-block;
+  min-width: 120px;
   background: #fff;
   font-weight: 400;
   font-size: 14px;
@@ -68,6 +76,14 @@ export default {
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
+  }
+
+  p:first-child {
+    border-radius: 8px 8px 0 0;
+  }
+
+  p:last-child {
+    border-radius: 0 0 8px 8px;
   }
 
   p:hover {

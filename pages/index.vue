@@ -5,45 +5,17 @@
     </div>
     <div class="products__list-wrapper">
       <div class="products__list-view">
-        <p class="products__list-view-result">7,618 results found in 5ms</p>
-        <products-sort :options="options" :selected="selected" />
+        <p class="products__list-view-result">
+          {{ products.length }} results found in {{ requestTimeStamp }}ms
+        </p>
+        <products-select
+          :options="options"
+          :selected="selected"
+          @select="optionSelect"
+        />
       </div>
       <div class="products__search">
-        <div class="products__search-wrapper">
-          <input
-            v-on:keyup.enter="searchProducts"
-            v-model="searchValue"
-            placeholder="Search hear"
-            class="products__search-input"
-            type="text"
-          />
-          <button @click="searchProducts">
-            <svg
-              width="22"
-              height="20"
-              viewBox="0 0 22 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M10.2975 17C14.9283 17 18.6823 13.4183 18.6823 9C18.6823 4.58172 14.9283 1 10.2975 1C5.6668 1 1.91284 4.58172 1.91284 9C1.91284 13.4183 5.6668 17 10.2975 17Z"
-                stroke="#606060"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M20.7784 19L15.538 14"
-                stroke="#606060"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-        </div>
+        <search-input @search="searchProducts" />
       </div>
       <ul v-if="!isProductsLoading" class="products__list">
         <product-item
@@ -66,7 +38,10 @@
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+import ProductsSelect from "../components/ProductsSelect.vue";
+import SearchInput from "../components/SearchInput.vue";
 export default {
+  components: { SearchInput, ProductsSelect },
   data() {
     return {
       fromCount: 0,
@@ -88,7 +63,8 @@ export default {
     }),
 
     ...mapState({
-      searchQuery: (state) => state.products.searchQuery,
+      products: (state) => state.products.products,
+      requestTimeStamp: (state) => state.products.requestTimeStamp,
       isProductsLoading: (state) => state.products.isProductsLoading,
     }),
   },
@@ -96,6 +72,7 @@ export default {
   methods: {
     ...mapMutations({
       setSearchQuery: "products/setSearchQuery",
+      setSelectedSort: "products/setSelectedSort",
     }),
 
     ...mapActions({
@@ -104,8 +81,13 @@ export default {
       addWishlist: "wishlist/addToWishlist",
     }),
 
-    searchProducts() {
-      this.setSearchQuery(this.searchValue);
+    optionSelect(option) {
+      this.selected = option.name;
+      this.setSelectedSort(option.value);
+    },
+
+    searchProducts(option) {
+      this.setSearchQuery(option);
     },
 
     addToWishlist(data) {
@@ -176,6 +158,7 @@ export default {
 
   &__search {
     width: 100%;
+    margin-top: 26px;
   }
 
   &__search-wrapper {

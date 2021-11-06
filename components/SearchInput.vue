@@ -1,13 +1,13 @@
 <template>
-  <div @click="searchProducts" class="search-wrapper">
+  <div class="search-wrapper">
     <input
-      v-on:keyup.enter="searchEnterProducts"
+      v-on:keyup.enter="searchProducts"
       v-model="searchValue"
       placeholder="Search hear"
       class="products__search-input"
       type="text"
     />
-    <button>
+    <button @click="searchProducts">
       <svg
         width="22"
         height="20"
@@ -36,11 +36,22 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      searchValue: "",
+    };
+  },
+
+  methods: {
+    searchProducts() {
+      this.$emit("search", this.searchValue);
+    },
+  },
+};
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .search-wrapper {
-  margin-top: 61px;
   position: relative;
 
   input {
