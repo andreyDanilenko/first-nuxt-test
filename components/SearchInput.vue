@@ -2,7 +2,7 @@
   <div class="search-wrapper">
     <input
       v-on:keyup.enter="searchProducts"
-      v-model="searchValue"
+      v-model.trim="searchValue"
       placeholder="Search hear"
       class="products__search-input"
       type="text"

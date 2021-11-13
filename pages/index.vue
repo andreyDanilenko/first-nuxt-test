@@ -31,7 +31,28 @@
       </ul>
       <div class="products__loading" v-else>Идет загрузка...</div>
 
-      <div class="products__pagination"></div>
+      <div
+        v-if="Math.ceil(products.length / 9) > 1"
+        class="products__pagination"
+      >
+        <button
+          class="products__pagiantion-button products__pagiantion-button--prev"
+        ></button>
+        <div class="products__pagiantion-list">
+          <button
+            @click="sel = page"
+            v-for="page in Math.ceil(products.length / 9)"
+            :key="page"
+            :class="sel === page ? 'products__pagiantion-item--active' : ''"
+            class="products__pagiantion-item"
+          >
+            {{ page }}
+          </button>
+        </div>
+        <button
+          class="products__pagiantion-button products__pagiantion-button--next"
+        ></button>
+      </div>
     </div>
   </div>
 </template>
@@ -47,6 +68,7 @@ export default {
       fromCount: 0,
       beforeCount: 9,
       searchValue: "",
+      sel: 1,
       options: [
         { name: "Default", value: "default" },
         { name: "Price", value: "price" },
@@ -185,6 +207,91 @@ export default {
       top: 50%;
       right: 2%;
       transform: translate(0, -50%);
+    }
+  }
+
+  &__pagination {
+    margin-top: 37px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__pagiantion-list {
+    display: flex;
+    background: #ededed;
+    border-radius: 50px;
+    margin: 0 18px;
+  }
+
+  &__pagiantion-item {
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    display: block;
+    border: none;
+    background: transparent;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    &:nth-child(n + 2) {
+      margin-left: -10px;
+    }
+
+    &--active {
+      background: #6f64f8;
+      color: #fff;
+    }
+  }
+
+  &__pagiantion-button {
+    position: relative;
+    cursor: pointer;
+    display: block;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: 400;
+    background: #ededed;
+    border: none;
+    border-radius: 50%;
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: "";
+      width: 10px;
+      height: 2px;
+      border-radius: 5px;
+      background: black;
+    }
+
+    &--prev {
+      &::before {
+        transform: rotate(-45deg);
+        top: 16px;
+        right: 16px;
+      }
+
+      &::after {
+        transform: rotate(45deg);
+        bottom: 16px;
+        right: 16px;
+      }
+    }
+
+    &--next {
+      &::before {
+        transform: rotate(45deg);
+        top: 16px;
+        left: 16px;
+      }
+      &::after {
+        transform: rotate(-45deg);
+        bottom: 16px;
+        left: 16px;
+      }
     }
   }
 }
