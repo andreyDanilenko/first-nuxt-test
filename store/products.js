@@ -4,6 +4,9 @@ export const state = () => ({
     searchQuery: '',
     selectedSort: '',
     requestTimeStamp: '',
+    page: 1,
+    start: 0,
+    end: 9,
 })
 
 export const mutations = {
@@ -35,6 +38,8 @@ export const mutations = {
 
     setPage(state, page) {
         state.page = page
+        state.start = (page - 1) * 10;
+        state.end = page * 10 - 1;
     },
 }
 
@@ -61,14 +66,7 @@ export const getters = {
 
     },
     sortedAndSearchedProducts(state, getters) {
-        const start = (state.page - 1) * 9
-        const end = (state.page) * 9
         return getters.sortedProducts
             .filter(product => product.title.toLowerCase().includes(state.searchQuery.toLowerCase()))
-        mutations.setPages(state, sortedAndSearchedAllProducts.length);
-        // this.mutations.setPages(sortedAndSearchedAllProducts.length)
-        const sortedAndSearchedPageProducts = sortedAndSearchedAllProducts.slice(start, end)
-        return sortedAndSearchedPageProducts
-
     }
 }

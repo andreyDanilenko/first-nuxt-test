@@ -67,9 +67,6 @@ export default {
       beforeCount: 9,
       searchValue: "",
       sel: 1,
-      start: 0,
-      end: 9,
-      page: 1,
       pages: 1,
       options: [
         { name: "Default", value: "default" },
@@ -90,6 +87,9 @@ export default {
       products: (state) => state.products.products,
       requestTimeStamp: (state) => state.products.requestTimeStamp,
       isProductsLoading: (state) => state.products.isProductsLoading,
+      page: (state) => state.products.page,
+      start: (state) => state.products.start,
+      end: (state) => state.products.end,
     }),
   },
 
@@ -97,6 +97,7 @@ export default {
     ...mapMutations({
       setSearchQuery: "products/setSearchQuery",
       setSelectedSort: "products/setSelectedSort",
+      setPage: "products/setPage",
     }),
 
     ...mapActions({
@@ -106,9 +107,7 @@ export default {
     }),
 
     openPageHundle(page) {
-      this.page = page;
-      this.start = (page - 1) * 10;
-      this.end = page * 10 - 1;
+      this.setPage(page);
     },
 
     optionSelect(option) {
@@ -117,17 +116,16 @@ export default {
     },
 
     searchProducts(option) {
+      this.setPage(1);
       this.setSearchQuery(option);
     },
 
     addToWishlist(data) {
       this.addWishlist(data);
-      console.log(data);
     },
 
     addToCart(data) {
       this.addCart(data);
-      console.log(data);
     },
   },
 
