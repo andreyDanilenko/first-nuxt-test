@@ -6,7 +6,7 @@
     <div class="products__list-wrapper">
       <div class="products__list-view">
         <p class="products__list-view-result">
-          {{ products.length }} results found in {{ requestTimeStamp }}ms
+          {{ products.length }} results found in {{ requestTimeStamp }}s
         </p>
         <products-select
           :options="options"
@@ -19,10 +19,7 @@
       </div>
       <ul v-if="!isProductsLoading" class="products__list">
         <product-item
-          v-for="product in sortedAndSearchedProducts.slice(
-            fromCount,
-            beforeCount
-          )"
+          v-for="product in sortedAndSearchedProducts.slice(start, end)"
           :key="product.id"
           :product="product"
           @addToWishlist="addToWishlist"
@@ -31,25 +28,26 @@
       </ul>
       <div class="products__loading" v-else>Идет загрузка...</div>
 
-      <div
-        v-if="Math.ceil(products.length / 9) > 1"
-        class="products__pagination"
-      >
+      <div v-if="pages > 1" class="products__pagination">
         <button
+          @click="page > 1 ? openPageHundle(page - 1) : openPageHundle(page)"
           class="products__pagiantion-button products__pagiantion-button--prev"
         ></button>
         <div class="products__pagiantion-list">
           <button
-            @click="sel = page"
-            v-for="page in Math.ceil(products.length / 9)"
-            :key="page"
-            :class="sel === page ? 'products__pagiantion-item--active' : ''"
+            @click="openPageHundle(p)"
+            v-for="p in pages"
+            :key="p"
+            :class="p === page ? 'products__pagiantion-item--active' : ''"
             class="products__pagiantion-item"
           >
-            {{ page }}
+            {{ p }}
           </button>
         </div>
         <button
+          @click="
+            page < pages ? openPageHundle(page + 1) : openPageHundle(page)
+          "
           class="products__pagiantion-button products__pagiantion-button--next"
         ></button>
       </div>
@@ -69,6 +67,10 @@ export default {
       beforeCount: 9,
       searchValue: "",
       sel: 1,
+      start: 0,
+      end: 9,
+      page: 1,
+      pages: 1,
       options: [
         { name: "Default", value: "default" },
         { name: "Price", value: "price" },
@@ -103,6 +105,12 @@ export default {
       addWishlist: "wishlist/addToWishlist",
     }),
 
+    openPageHundle(page) {
+      this.page = page;
+      this.start = (page - 1) * 10;
+      this.end = page * 10 - 1;
+    },
+
     optionSelect(option) {
       this.selected = option.name;
       this.setSelectedSort(option.value);
@@ -125,6 +133,12 @@ export default {
 
   mounted() {
     this.fetchProducts();
+  },
+
+  watch: {
+    sortedAndSearchedProducts() {
+      this.pages = Math.ceil(this.sortedAndSearchedProducts.length / 9);
+    },
   },
 };
 </script>

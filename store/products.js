@@ -20,6 +20,7 @@ export const mutations = {
     },
 
     setSearchQuery(state, searchQuery) {
+        state.page = 1
         state.searchQuery = searchQuery
     },
 
@@ -28,10 +29,15 @@ export const mutations = {
     },
 
     setRequestTimeStamp(state, requestTimeStamp) {
+        let stampTime = Math.floor(requestTimeStamp) / 1000
+        state.requestTimeStamp = stampTime < 1 ? stampTime.toFixed(2) : stampTime.toPrecision(2);
+    },
 
-        state.requestTimeStamp = Math.floor(requestTimeStamp)
+    setPage(state, page) {
+        state.page = page
     },
 }
+
 
 export const actions = {
     async fetchProducts({ commit }) {
@@ -55,6 +61,14 @@ export const getters = {
 
     },
     sortedAndSearchedProducts(state, getters) {
-        return getters.sortedProducts.filter(product => product.title.toLowerCase().includes(state.searchQuery.toLowerCase()))
+        const start = (state.page - 1) * 9
+        const end = (state.page) * 9
+        return getters.sortedProducts
+            .filter(product => product.title.toLowerCase().includes(state.searchQuery.toLowerCase()))
+        mutations.setPages(state, sortedAndSearchedAllProducts.length);
+        // this.mutations.setPages(sortedAndSearchedAllProducts.length)
+        const sortedAndSearchedPageProducts = sortedAndSearchedAllProducts.slice(start, end)
+        return sortedAndSearchedPageProducts
+
     }
 }
