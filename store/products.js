@@ -38,7 +38,7 @@ export const mutations = {
 
     setPage(state, page) {
         state.page = page
-        state.start = (page - 1) * 10;
+        state.start = (page - 1) * 9;
         state.end = page * 10 - 1;
     },
 }

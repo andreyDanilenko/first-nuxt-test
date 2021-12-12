@@ -5,6 +5,6 @@
 .error {
   text-align: center;
   margin-top: 40px;
-  font-size: 50px;
+
 }
 </style>
